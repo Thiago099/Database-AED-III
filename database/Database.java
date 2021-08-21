@@ -37,14 +37,32 @@ public class Database<T> {
     public void Add(T object)
     {
         try
-            {
-                RandomAccessFile file = new RandomAccessFile(path.getData(), "rw");
-                file.write(adapter.Serialize(object));
-                file.close();
-            }
-            catch(IOException ex)
-            {
+        {
+            RandomAccessFile file = new RandomAccessFile(path.getData(), "rw");
+            byte[] obj = adapter.Serialize(object);
+            file.writeInt(obj.length);
+            file.write(obj);
+            file.close();
+        }
+        catch(IOException ex)
+        {
 
-            }
+        }
+    }
+    public T Get()
+    {
+        try
+        {
+            RandomAccessFile file = new RandomAccessFile(path.getData(), "rw");
+            byte[] data = new byte[file.readInt()];
+            file.read(data);
+            file.close();
+            return adapter.Deserialize(data);
+        }
+        catch(IOException ex)
+        {
+
+        }
+        return null;
     }
 }
