@@ -148,7 +148,7 @@ public class Table<T extends Identified>
         {
             RandomAccessFile file = new RandomAccessFile(path.getData(), "rw");
             byte[] obj = adapter.Serialize(object);
-            Index current = getPosition(obj.length + 4);
+            Index current = getPosition(obj.length);
             current.setId(object.getId());
             index.append(current);
             file.seek(current.getPosition());
