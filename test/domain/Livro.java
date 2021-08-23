@@ -9,19 +9,19 @@ public class Livro implements Identified {
   float preco;
 
   @Override
-  public void setId(int id) { this.id = id; }
-  
-  @Override
   public int getId() { return id; }
 
+  @Override
+  public void setId(int id) { this.id = id; }
+  
   public String getTitulo() { return titulo; }
   public void setTitulo(String titulo) {this.titulo = titulo;}
 
   public String getAutor() { return autor; }
-  public float getPreco() { return preco; }
-  
-  public void setPreco(float preco) { this.preco = preco;}
   public void setAutor(String autor) { this.autor = autor;}
+  
+  public float getPreco() { return preco; }
+  public void setPreco(float preco) { this.preco = preco;}
 
   public Livro(String titulo, String autor, float preco) {
     this.titulo = titulo;
