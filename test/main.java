@@ -1,5 +1,4 @@
 package test;
-import java.io.RandomAccessFile;
 
 import test.adapters.LivroAdapter;
 import test.domain.Livro;
