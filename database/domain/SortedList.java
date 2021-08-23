@@ -3,7 +3,8 @@ import java.util.*;
 
 import database.ext.Comparable;
 
-public class SortedList<T extends Comparable<T>>{
+public class SortedList<T extends Comparable<T>>
+{
     List<T> list;
     public SortedList(List<T> list) 
     {

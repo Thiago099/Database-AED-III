@@ -3,12 +3,14 @@ import database.ext.Comparable;
 
 public class Garbage extends Registry implements Comparable<Garbage> 
 {
-    public Garbage(int id, long position, int length) {
+    public Garbage(int id, long position, int length) 
+    {
         super(id, position, length);
     }
     
     @Override
-    public int compareTo(Garbage o) {
+    public int compareTo(Garbage o) 
+    {
         return this.length - o.length;
     }
     

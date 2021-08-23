@@ -2,7 +2,8 @@ package test.domain;
 import java.text.DecimalFormat;
 import database.ext.*;
 
-public class Livro implements Identified {
+public class Livro implements Identified 
+{
   int id;
   String titulo;
   String autor;

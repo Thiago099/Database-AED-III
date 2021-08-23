@@ -11,7 +11,8 @@ public class DatabasePath
         String dir = System.getProperty("user.dir") + "/data/" + name + "/";
 
         File folder = new File(dir);
-        if (!folder.exists()){
+        if (!folder.exists())
+        {
             folder.mkdirs();
         }
 

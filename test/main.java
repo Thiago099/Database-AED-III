@@ -5,7 +5,8 @@ import test.domain.Livro;
 import database.*;
 
 class Main {
-  public static void main(String[] args) {
+  public static void main(String[] args) 
+  {
     Table<Livro> db = new Table<Livro>("livro", new LivroAdapter());
     // db.insert(new Livro("Eu, Robô", "Isaac Asimov", 14.90F));
     // db.insert(new Livro("Eu Sou a Lenda", "Richard Matheson", 21.99F));
