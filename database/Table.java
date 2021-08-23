@@ -148,7 +148,7 @@ public class Table<T extends Identified>
         {
             RandomAccessFile file = new RandomAccessFile(path.getData(), "rw");
             byte[] obj = adapter.Serialize(object);
-            Index current = getPosition(obj.length);
+            Index current = getPosition(obj.length + 4);
             current.setId(object.getId());
             index.append(current);
             file.seek(current.getPosition());
@@ -176,7 +176,7 @@ public class Table<T extends Identified>
             }
             
         }
-        Index ret = new Index(last.getId() + 1, last.getPosition() + last.getLength(), length + 4);
+        Index ret = new Index(last.getId() + 1, last.getPosition() + last.getLength(), length);
         last = ret;
         return ret;
     }
