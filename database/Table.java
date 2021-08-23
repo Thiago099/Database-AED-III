@@ -121,12 +121,14 @@ public class Table<T extends Identified>
 
         if(!subject.x) return;
 
-        index.remove(subject.y);
+        index.remove(id);
 
         if(subject.y == last)
         {
+            last = this.index.get(this.index.size() - 1);
             return;
         }
+        
         garbage.append(Garbage.create(subject.y));
     }
 
