@@ -83,24 +83,6 @@ public class Table<T extends Identified>
     SortedList<Index> index;
     SortedList<Garbage> garbage;
 
-    public void insert(T object)
-    {
-        try
-        {
-            RandomAccessFile file = new RandomAccessFile(path.getData(), "rw");
-            byte[] obj = adapter.Serialize(object);
-            Index current = getPosition(obj.length + 4);
-            index.append(current);
-            file.seek(current.getPosition());
-            file.writeInt(obj.length);
-            file.write(obj);
-        }
-        catch(Exception ex)
-        {
-            System.out.println(ex.getMessage());
-        }
-    }
-
     public T get(int id)
     {
         Vector<Boolean, Index> subject = index.find(id);
@@ -148,12 +130,22 @@ public class Table<T extends Identified>
         garbage.append(Garbage.create(subject.y));
     }
 
+    public void insert(T object)
+    {
+        write(object);
+    }
+
     public void update(T object)
     {
         delete(object.getId());
+        write(object);
+    }
+
+    void write(T object)
+    {
         try
         {
-            RandomAccessFile file = new RandomAccessFile(path.getData(), "w");
+            RandomAccessFile file = new RandomAccessFile(path.getData(), "rw");
             byte[] obj = adapter.Serialize(object);
             Index current = getPosition(obj.length + 4);
             current.setId(object.getId());
@@ -164,7 +156,7 @@ public class Table<T extends Identified>
         }
         catch(Exception ex)
         {
-
+            System.out.println(ex.getMessage());
         }
     }
 
