@@ -181,7 +181,7 @@ public class Table<T extends Identified> {
             }
             
         }
-        Index ret = new Index(last.getId() + 1, last.getPosition() + last.getLength(), length);
+        Index ret = new Index(last.getId() + 1, last.getPosition() + last.getLength(), length + 4);
         last = ret;
         return ret;
     }

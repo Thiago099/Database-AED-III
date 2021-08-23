@@ -23,29 +23,21 @@ public class Livro implements Identified {
   public void setPreco(float preco) { this.preco = preco;}
   public void setAutor(String autor) { this.autor = autor;}
 
-  public Livro(String t, String a, float p) {
-    this.titulo = t;
-    this.autor = a;
-    this.preco = p;
+  public Livro(String titulo, String autor, float preco) {
+    this.titulo = titulo;
+    this.autor = autor;
+    this.preco = preco;
   }
-
   public Livro() {
-    this.titulo = "";
-    this.autor = "";
-    this.preco = 0F;
   }
 
   public String toString() {
     DecimalFormat df = new DecimalFormat("#,##0.00");
 
     return 
-    "\nId: " + this.id + 
-    "\nTítulo: " + this.titulo + 
-    "\nAutor.: " + this.autor +
-     "\nPreço.: R$ " + df.format(this.preco);
+      "\nId: " + this.id + 
+      "\nTítulo: " + this.titulo + 
+      "\nAutor.: " + this.autor +
+      "\nPreço.: R$ " + df.format(this.preco);
   }
-
-
-
-  
 }
