@@ -147,15 +147,15 @@ public class Table<T extends Identified> {
         garbage.append(Garbage.create(subject.y));
     }
 
-    public void update(int id, T object)
+    public void update(T object)
     {
-        delete(id);
+        delete(object.getId());
         try
         {
             RandomAccessFile file = new RandomAccessFile(path.getData(), "w");
             byte[] obj = adapter.Serialize(object);
             Index current = getPosition(obj.length + 4);
-            current.setId(id);
+            current.setId(object.getId());
             index.append(current);
             file.seek(current.getPosition());
             file.writeInt(obj.length);
