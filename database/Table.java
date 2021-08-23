@@ -137,6 +137,7 @@ public class Table<T extends Identified>
 
     public void update(T object)
     {
+        // TODO optimize: deleting and re-adding the same item from the index list
         delete(object.getId());
         write(object);
     }
