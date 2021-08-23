@@ -3,56 +3,21 @@ import java.io.RandomAccessFile;
 
 import test.adapters.LivroAdapter;
 import test.domain.Livro;
-
-import java.io.IOException;
+import database.*;
 
 class Main {
   public static void main(String[] args) {
-    Livro l1 = new Livro("Eu, Robô", "Isaac Asimov", 14.90F);
-    Livro l2 = new Livro("Eu Sou a Lenda", "Richard Matheson", 21.99F);
+    Database<Livro> db = new Database<Livro>("livro", new LivroAdapter());
+    // db.insert(new Livro("Eu, Robô", "Isaac Asimov", 14.90F));
+    // db.insert(new Livro("Eu Sou a Lenda", "Richard Matheson", 21.99F));
+    // db.close();
 
-    RandomAccessFile arq;
-    byte ba[];
-    LivroAdapter l = new LivroAdapter();
+    // System.out.println(db.get(1));
+    // System.out.println(db.get(2));
 
-    try {
-
-      // ESCRITA
-      arq = new RandomAccessFile("livros.bin", "rw");
-
-      long pos1 = arq.getFilePointer();
-      ba = l.Serialize(l1);
-      arq.writeInt(ba.length);
-      arq.write(ba);
-
-      long pos2 = arq.getFilePointer();
-      ba = l.Serialize(l2);
-      arq.writeInt(ba.length);
-      arq.write(ba);
-
-      // LEITURA
-      int tam;
-      
-      arq.seek(pos1);
-      tam = arq.readInt();
-      ba = new byte[tam];
-      arq.read(ba);
-      var l4 = l.Deserialize(ba);
-      
-      arq.seek(pos2);
-      tam = arq.readInt();
-      ba = new byte[tam];
-      arq.read(ba);
-      var l3 = l.Deserialize(ba);
-
-
-      System.out.println(l3);
-      System.out.println(l4);
-
-      arq.close();
-
-    } catch (IOException e) {
-      e.printStackTrace();
+    for(Livro livro : db.getAll())
+    {
+      System.out.println(livro);
     }
 
   }

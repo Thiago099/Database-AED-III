@@ -5,7 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import database.Adapter;
+import database.ext.Adapter;
 import test.domain.Livro;
 
 public class LivroAdapter implements Adapter<Livro>
@@ -14,9 +14,9 @@ public class LivroAdapter implements Adapter<Livro>
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
-        dos.writeUTF(l.titulo);
-        dos.writeUTF(l.autor);
-        dos.writeFloat(l.preco);
+        dos.writeUTF(l.getTitulo());
+        dos.writeUTF(l.getAutor());
+        dos.writeFloat(l.getPreco());
         return baos.toByteArray();
       }
     
@@ -25,9 +25,9 @@ public class LivroAdapter implements Adapter<Livro>
         ByteArrayInputStream bais = new ByteArrayInputStream(ba);
         DataInputStream dis = new DataInputStream(bais);
         var l = new Livro();
-        l.titulo = dis.readUTF();
-        l.autor = dis.readUTF();
-        l.preco = dis.readFloat();
+        l.setTitulo(dis.readUTF());
+        l.setAutor(dis.readUTF());
+        l.setPreco(dis.readFloat());
         return l;
       }
     
