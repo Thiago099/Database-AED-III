@@ -39,7 +39,7 @@ public class Livro implements Identified {
     DecimalFormat df = new DecimalFormat("#,##0.00");
 
     return 
-    "\nTítulo: " + this.id + 
+    "\nId: " + this.id + 
     "\nTítulo: " + this.titulo + 
     "\nAutor.: " + this.autor +
      "\nPreço.: R$ " + df.format(this.preco);

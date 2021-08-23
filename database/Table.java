@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import database.domain.*;
 import database.ext.*;
 
-public class Database<T extends Identified> {
-    public Database(String name, Adapter<T> adapter) 
+public class Table<T extends Identified> {
+    public Table(String name, Adapter<T> adapter) 
     {
         this.path = new DatabasePath(name, "index.bin", "data.bin");
         
