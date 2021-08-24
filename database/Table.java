@@ -85,7 +85,7 @@ public class Table<T extends Identified>
 
     public T get(int id)
     {
-        // TODO add foreign keys
+        // TODO add index keys
         Vector<Boolean, Index> subject = index.find(id);
         if(!subject.x) return null;
         try
