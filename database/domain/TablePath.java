@@ -2,11 +2,11 @@ package database.domain;
 
 import java.io.File;
 
-public class DatabasePath 
+public class TablePath 
 {
     String index;
     String data;
-    public DatabasePath(String name, String index, String data) 
+    public TablePath(String name, String index, String data) 
     {
         String dir = System.getProperty("user.dir") + "/data/" + name + "/";
 

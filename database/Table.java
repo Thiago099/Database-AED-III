@@ -12,9 +12,9 @@ import database.ext.*;
 
 public class Table<T extends Identified> 
 {
-    public Table(String name, Adapter<T> adapter) 
+    public Table(Class<T> classe, Adapter<T> adapter) 
     {
-        this.path = new DatabasePath(name, "index.bin", "data.bin");
+        this.path = new TablePath(classe.getName(), "index.bin", "data.bin");
         
         this.adapter = adapter;
         try
@@ -70,6 +70,7 @@ public class Table<T extends Identified>
                 index.writeLong(ii.getPosition());
                 index.writeInt(ii.getLength());
             }
+            index.close();
         }
         catch(IOException ex)
         {
@@ -79,7 +80,7 @@ public class Table<T extends Identified>
 
     Index last;
     Adapter<T> adapter;
-    DatabasePath path;
+    TablePath path;
     SortedList<Index> index;
     SortedList<Garbage> garbage;
 
@@ -97,6 +98,7 @@ public class Table<T extends Identified>
             file.close();
             T ret = adapter.Deserialize(data);
             ret.setId(id);
+            file.close();
             return ret;
         }
         catch(Exception ex)
@@ -152,11 +154,15 @@ public class Table<T extends Identified>
             RandomAccessFile file = new RandomAccessFile(path.getData(), "rw");
             byte[] obj = adapter.Serialize(object);
             Index current = getPosition(obj.length + 4);
-            current.setId(object.getId());
+            if(object.getId() != 0 )
+            {
+                current.setId(object.getId());
+            }
             index.append(current);
             file.seek(current.getPosition());
             file.writeInt(obj.length);
             file.write(obj);
+            file.close();
         }
         catch(Exception ex)
         {

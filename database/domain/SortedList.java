@@ -57,6 +57,7 @@ public class SortedList<T extends Comparable<T>>
             else
             {
                 list.add(c,item);
+                return;
             }
         }
 
