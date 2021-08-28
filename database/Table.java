@@ -159,6 +159,7 @@ public class Table<T extends Identified>
                 current.setId(object.getId());
             }
             index.append(current);
+            last = this.index.get(this.index.size() - 1);
             file.seek(current.getPosition());
             file.writeInt(obj.length);
             file.write(obj);
@@ -186,7 +187,6 @@ public class Table<T extends Identified>
             
         }
         Index ret = new Index(last.getId() + 1, last.getPosition() + last.getLength(), length);
-        last = ret;
         return ret;
     }
 }
