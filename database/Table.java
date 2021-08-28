@@ -107,7 +107,7 @@ public class Table<T extends Identified>
         }
     }
 
-    public List<T> getAll()
+    public List<T> get()
     {
         List<T> ret = new ArrayList<T>();
         for(int i = 0; i < index.size();i++)

@@ -15,12 +15,14 @@ class Main {
     
     // eu_robo.setTitulo("Nós, robôs");
     // db.update(eu_robo);
+
+    // db.insert(new Livro("Test", "test", 74.90F));
     // db.close();
     
     // System.out.println(db.get(1));
     // System.out.println(db.get(2));
 
-    for(Livro livro : db.getAll())
+    for(Livro livro : db.get())
     {
       System.out.println(livro);
     }
