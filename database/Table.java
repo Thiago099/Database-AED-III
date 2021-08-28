@@ -87,12 +87,12 @@ public class Table<T extends Identified>
     public T get(int id)
     {
         // TODO add index keys
-        Vector<Boolean, Index> subject = index.find(id);
+        Tuple<Boolean, Integer> subject = index.find(id);
         if(!subject.x) return null;
         try
         {
             RandomAccessFile file = new RandomAccessFile(path.getData(), "r");
-            file.seek(subject.y.getPosition());
+            file.seek(index.get(subject.y).getPosition());
             byte[] data = new byte[file.readInt()];
             file.read(data);
             file.close();
@@ -120,19 +120,19 @@ public class Table<T extends Identified>
 
     public void delete(int id)
     {
-        Vector<Boolean, Index> subject = index.find(id);
+        Tuple<Boolean, Integer> subject = index.find(id);
 
         if(!subject.x) return;
+        Index y = index.get(subject.y);
+        index.remove(subject.y);
 
-        index.remove(id);
-
-        if(subject.y == last)
+        if(y == last)
         {
             last = this.index.get(this.index.size() - 1);
             return;
         }
         
-        garbage.append(Garbage.create(subject.y));
+        garbage.append(Garbage.create(y));
     }
 
     public void insert(T object)

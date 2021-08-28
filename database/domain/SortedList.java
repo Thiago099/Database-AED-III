@@ -28,7 +28,7 @@ public class SortedList<T extends Comparable<T>>
 
     public void remove(T item)
     {
-        Vector<Boolean, Integer> res = find(item);
+        Tuple<Boolean, Integer> res = find(item);
         if(res.x)
         {
             list.remove(res.y);
@@ -72,7 +72,7 @@ public class SortedList<T extends Comparable<T>>
 
     }
 
-    public Vector<Boolean, T> find(int id)
+    public Tuple<Boolean, Integer> find(int id)
     {
         int l = 0;
         int r = list.size() - 1;
@@ -86,13 +86,13 @@ public class SortedList<T extends Comparable<T>>
             else if (com < 0) l = c + 1;
             else
             {
-                return new Vector<Boolean, T>(true, list.get(c));
+                return new Tuple<Boolean, Integer>(true, c);
             }
         }
-        return new Vector<Boolean, T>(false, list.get(c));
+        return new Tuple<Boolean, Integer>(false, c);
     }
 
-    public Vector<Boolean, Integer> find(T element)
+    public Tuple<Boolean, Integer> find(T element)
     {
         int l = 0;
         int r = list.size() - 1;
@@ -106,9 +106,9 @@ public class SortedList<T extends Comparable<T>>
             else if (com < 0) l = c + 1;
             else
             {
-                return new Vector<Boolean, Integer>(true, c);
+                return new Tuple<Boolean, Integer>(true, c);
             }
         }
-        return new Vector<Boolean, Integer>(false, c);
+        return new Tuple<Boolean, Integer>(false, c);
     }
 }
