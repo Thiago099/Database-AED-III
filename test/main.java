@@ -8,14 +8,14 @@ class Main {
   public static void main(String[] args) 
   {
     Table<Livro> db = new Table<Livro>(Livro.class, new LivroAdapter());
-    db.insert(new Livro("Eu, Robô", "Isaac Asimov", 14.90F));
-    db.insert(new Livro("Eu Sou a Lenda", "Richard Matheson", 21.99F));
+    // db.insert(new Livro("Eu, Robô", "Isaac Asimov", 14.90F));
+    // db.insert(new Livro("Eu Sou a Lenda", "Richard Matheson", 21.99F));
     
     // Livro eu_robo = db.get(1);
     
     // eu_robo.setTitulo("Nós, robôs");
     // db.update(eu_robo);
-    db.close();
+    // db.close();
     
     // System.out.println(db.get(1));
     // System.out.println(db.get(2));
