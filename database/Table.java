@@ -109,7 +109,7 @@ public class Table<T extends Identified>
 
     public List<T> get()
     {
-        List<T> ret = new ArrayList<T>();
+        List<T> ret = new LinkedList<T>();
         for(int i = 0; i < index.size();i++)
         {
             ret.add(get(index.get(i).getId()));
