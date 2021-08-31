@@ -63,7 +63,10 @@ public class BTree<Key extends Comparable<Key>, Value>  {
         return height;
     }
 
-
+    public void delete(Key key) 
+    {
+        // TODO https://pucminas.instructure.com/courses/82665/pages/remocao-em-uma-arvore-b?module_item_id=1557400
+    }
     /**
      * Returns the value associated with the given key.
      *
