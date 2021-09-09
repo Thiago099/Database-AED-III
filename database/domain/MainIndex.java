@@ -1,4 +1,4 @@
-package database;
+package database.domain;
 import java.io.RandomAccessFile;
 import java.util.LinkedList;
 import java.io.IOException;
@@ -10,13 +10,12 @@ import java.util.ArrayList;
 import database.domain.*;
 import database.ext.*;
 
-public class Table<T extends Identified> 
-{
-    public Table(Class<T> classe, Adapter<T> adapter) 
+public class MainIndex {
+    
+    public MainIndex(String name) 
     {
-        this.path = new TablePath(classe.getName(), "index.bin", "data.bin");
+        this.path = new TablePath(name, "index.bin", "data.bin");
         
-        this.adapter = adapter;
         try
         {
             this.index = new SortedList<Index>(new LinkedList<Index>());
@@ -50,7 +49,6 @@ public class Table<T extends Identified>
             
         }
     }
-
     public void close()
     {
         try
@@ -77,100 +75,18 @@ public class Table<T extends Identified>
             System.out.println(ex.getMessage());
         }
     }
-
     Index last;
-    Adapter<T> adapter;
     TablePath path;
     SortedList<Index> index;
     SortedList<Garbage> garbage;
 
-    public T get(int id)
-    {
-        // TODO add index keys
-        Tuple<Boolean, Integer> subject = index.find(id);
-        if(!subject.x) return null;
-        try
-        {
-            RandomAccessFile file = new RandomAccessFile(path.getData(), "r");
-            Index idx = index.get(subject.y);
-            file.seek(idx.getPosition());
-            byte[] data = new byte[idx.getLength()];
-            file.read(data);
-            file.close();
-            T ret = adapter.Deserialize(data);
-            ret.setId(id);
-            file.close();
-            return ret;
-        }
-        catch(Exception ex)
-        {
-            return null;
-        }
-    }
+    public Index getLast() { return last; }
+    public void setLast(Index value) { last = value; }
 
-    public List<T> get()
-    {
-        List<T> ret = new LinkedList<T>();
-        for(int i = 0; i < index.size();i++)
-        {
-            ret.add(get(index.get(i).getId()));
-        }
-        return ret;
-    }
-
-
-    public void delete(int id)
-    {
-        Tuple<Boolean, Integer> subject = index.find(id);
-
-        if(!subject.x) return;
-        Index y = index.get(subject.y);
-        index.remove(subject.y);
-
-        if(y == last)
-        {
-            last = this.index.get(this.index.size() - 1);
-            return;
-        }
-        
-        garbage.append(Garbage.create(y));
-    }
-
-    public void insert(T object)
-    {
-        write(object);
-    }
-
-    public void update(T object)
-    {
-        // TODO optimize: deleting and re-adding the same item from the index list
-        delete(object.getId());
-        write(object);
-    }
-
-    void write(T object)
-    {
-        try
-        {
-            RandomAccessFile file = new RandomAccessFile(path.getData(), "rw");
-            byte[] obj = adapter.Serialize(object);
-            Index current = getPosition(obj.length);
-            if(object.getId() != 0)
-            {
-                current.setId(object.getId());
-            }
-            index.append(current);
-            current.setLength(obj.length);
-            last = this.index.get(this.index.size() - 1);
-            file.seek(current.getPosition());
-            file.write(obj);
-            file.close();
-        }
-        catch(Exception ex)
-        {
-            System.out.println(ex.getMessage());
-        }
-    }
+    public String getPath() { return path.getData(); }
+    public SortedList<Garbage> getGarbage(){ return garbage; }
+    public SortedList<Index> getIndex() { return index; }
+    public void updateLast(){ last = index.get(index.size() - 1); };
 
     Index getPosition(int length)
     {

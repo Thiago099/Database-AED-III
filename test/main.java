@@ -3,6 +3,7 @@ package test;
 import test.adapters.LivroAdapter;
 import test.domain.Livro;
 import database.*;
+import database.domain.Table;
 
 class Main {
   public static void main(String[] args) 
