@@ -92,8 +92,9 @@ public class Table<T extends Identified>
         try
         {
             RandomAccessFile file = new RandomAccessFile(path.getData(), "r");
-            file.seek(index.get(subject.y).getPosition());
-            byte[] data = new byte[file.readInt()];
+            Index idx = index.get(subject.y);
+            file.seek(idx.getPosition());
+            byte[] data = new byte[idx.getLength()];
             file.read(data);
             file.close();
             T ret = adapter.Deserialize(data);
@@ -153,15 +154,15 @@ public class Table<T extends Identified>
         {
             RandomAccessFile file = new RandomAccessFile(path.getData(), "rw");
             byte[] obj = adapter.Serialize(object);
-            Index current = getPosition(obj.length + 4);
+            Index current = getPosition(obj.length);
             if(object.getId() != 0)
             {
                 current.setId(object.getId());
             }
             index.append(current);
+            current.setLength(obj.length);
             last = this.index.get(this.index.size() - 1);
             file.seek(current.getPosition());
-            file.writeInt(obj.length);
             file.write(obj);
             file.close();
         }

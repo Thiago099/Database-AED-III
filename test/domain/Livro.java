@@ -28,7 +28,7 @@ public class Livro implements Identified
     this.titulo = titulo;
     this.autor = autor;
     this.preco = preco;
-  }
+    }
   public Livro() {
   }
 

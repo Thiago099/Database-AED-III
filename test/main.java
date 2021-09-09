@@ -17,7 +17,7 @@ class Main {
     // db.update(eu_robo);
 
     // db.insert(new Livro("Test", "test", 74.90F));
-    // db.close();
+    db.close();
     
     // System.out.println(db.get(1));
     // System.out.println(db.get(2));
