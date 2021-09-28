@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import database.domain.*;
 import database.ext.*;
 
-public class mainIndex {
+public class MainIndex {
     
-    public mainIndex(String name) 
+    public MainIndex(String name) 
     {
         this.path = new TablePath(name, "index.bin", "data.bin");
         

@@ -15,7 +15,7 @@ public class Table<T extends Identified>
     public Table(Class<T> classe, Adapter<T> adapter) 
     {
         this.adapter = adapter;
-        this.index = new mainIndex(classe.getName());
+        this.index = new MainIndex(classe.getName());
     }
 
     
@@ -24,7 +24,7 @@ public class Table<T extends Identified>
         index.close();
     }
     
-    mainIndex index;
+    MainIndex index;
     Adapter<T> adapter;
     
 
