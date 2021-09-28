@@ -14,7 +14,7 @@ public class MainIndex {
     
     public MainIndex(String name) 
     {
-        this.path = new TablePath(name, "index.bin", "data.bin");
+        this.path = new TablePath(name);
         
         try
         {

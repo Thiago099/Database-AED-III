@@ -6,7 +6,7 @@ public class TablePath
 {
     String index;
     String data;
-    public TablePath(String name, String index, String data) 
+    public TablePath(String name) 
     {
         String dir = System.getProperty("user.dir") + "/data/" + name + "/";
 
@@ -16,8 +16,8 @@ public class TablePath
             folder.mkdirs();
         }
 
-        this.index = dir + index;
-        this.data = dir + data;
+        this.index = dir + "index.bin";
+        this.data = dir +  "data.bin";
 
     }
     public String getData() { return data; }
