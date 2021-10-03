@@ -12,10 +12,13 @@ import database.ext.*;
 
 public class Table<T extends Identified> 
 {
-    public Table(Class<T> classe, Adapter<T> adapter) 
+    public Table(Class<?> classe, Adapter<T> adapter) 
     {
         this.adapter = adapter;
-        this.index = new MainIndex(classe.getName());
+        this.path = new TablePath(classe.getName());
+        this.hashIndex = new SortedList<HashIndex<?>>(new LinkedList());
+        this.classe = classe;
+        this.index = new MainIndex(path);
     }
 
     
@@ -24,8 +27,17 @@ public class Table<T extends Identified>
         index.close();
     }
     
+    public Table<T> addHashIndex(String field)
+    {
+        // hashIndex.append(new hashIndex(field));
+        return this;
+    }
+
     MainIndex index;
+    SortedList<HashIndex<?>> hashIndex;
     Adapter<T> adapter;
+    TablePath path;
+    Class<?> classe;
     
 
     public T get(int id)

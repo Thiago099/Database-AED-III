@@ -12,19 +12,19 @@ import database.ext.*;
 
 public class MainIndex {
     
-    public MainIndex(String name) 
+    public MainIndex(TablePath path) 
     {
-        this.path = new TablePath(name);
+        this.path = path;
         
         try
         {
             this.index = new SortedList<Index>(new LinkedList<Index>());
             this.garbage = new SortedList<Garbage>(new LinkedList<Garbage>());
 
-            File f = new File(path.getIndex());
+            File f = new File(path.get() + "index.bin");
             if(f.exists() && !f.isDirectory()) 
             { 
-                RandomAccessFile index = new RandomAccessFile(path.getIndex(), "r");
+                RandomAccessFile index = new RandomAccessFile(path.get() + "index.bin", "r");
                 int len = index.readInt();
                 for(int i = 0; i < len; i++) 
                 {
@@ -53,7 +53,7 @@ public class MainIndex {
     {
         try
         {
-            RandomAccessFile index = new RandomAccessFile(path.getIndex(), "rw");
+            RandomAccessFile index = new RandomAccessFile(path.get() + "index.bin", "rw");
             index.writeInt(this.index.size());
             for (int i = 0; i < this.index.size(); i++) {
                 Index ii = this.index.get(i);
@@ -83,7 +83,7 @@ public class MainIndex {
     public Index getLast() { return last; }
     public void setLast(Index value) { last = value; }
 
-    public String getPath() { return path.getData(); }
+    public String getPath() { return path.get() + "data.bin"; }
     public SortedList<Garbage> getGarbage(){ return garbage; }
     public SortedList<Index> getIndex() { return index; }
     public void updateLast(){ last = index.get(index.size() - 1); };

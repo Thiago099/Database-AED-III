@@ -4,8 +4,7 @@ import java.io.File;
 
 public class TablePath 
 {
-    String index;
-    String data;
+    String path;
     public TablePath(String name) 
     {
         String dir = System.getProperty("user.dir") + "/data/" + name + "/";
@@ -15,11 +14,7 @@ public class TablePath
         {
             folder.mkdirs();
         }
-
-        this.index = dir + "index.bin";
-        this.data = dir +  "data.bin";
-
+        path = dir;
     }
-    public String getData() { return data; }
-    public String getIndex() { return index; }
+    public String get() { return path; }
 }
