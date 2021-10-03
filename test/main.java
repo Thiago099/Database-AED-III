@@ -8,7 +8,10 @@ import database.domain.Table;
 class Main {
   public static void main(String[] args) 
   {
-    Table<Livro> db = new Table<Livro>(Livro.class, new LivroAdapter());
+    Table<Livro> db = new Table<Livro>(Livro.class, new LivroAdapter())
+      .addHashIndex("titulo")
+      .addHashIndex("nome");
+      
     // db.insert(new Livro("Eu, Robô", "Isaac Asimov", 14.90F));
     // db.insert(new Livro("Eu Sou a Lenda", "Richard Matheson", 21.99F));
     
