@@ -88,6 +88,7 @@ public class MainIndex {
     public SortedList<Index> getIndex() { return index; }
     public void updateLast(){ last = index.get(index.size() - 1); };
 
+
     Index getPosition(int length)
     {
         // TODO repalce sequential query to something else

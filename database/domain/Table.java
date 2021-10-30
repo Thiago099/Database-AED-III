@@ -5,10 +5,18 @@ import java.io.IOException;
 import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
-
-
+import java.util.Arrays;
+import java.util.regex.*;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
 import database.domain.*;
 import database.ext.*;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Member;
 
 public class Table<T extends Identified> 
 {
@@ -16,9 +24,51 @@ public class Table<T extends Identified>
     {
         this.adapter = adapter;
         this.path = new TablePath(classe.getName());
-        this.hashIndex = new SortedList<HashIndex<?>>(new LinkedList());
         this.classe = classe;
         this.index = new MainIndex(path);
+        
+        Pattern pattern = Pattern.compile("get.+");
+        Method[] methos = Arrays.stream(classe.getMethods()).filter(new Predicate<Method>() {
+            public boolean test(Method obj) {
+              String name = obj.getName();
+              boolean matches = pattern.matcher(name).matches();
+              return matches ? name != "getClass" : false;
+            }}).toArray(Method[]::new);
+          
+          this.methods = new HashMap<String, Method>();
+          for (Method method : methos) 
+          {
+              this.methods.put(method.getName().replaceAll("get", ""), method);
+            // System.out.println(method.getReturnType().getName());
+          }
+    }
+
+    public List<T> find(String field, Object value)
+    {
+        List<T> result = new LinkedList<T>();
+        Method criterion = methods.get(field);
+        for(Index current : index.getIndex().getList())
+        {
+            try
+            {
+                RandomAccessFile file = new RandomAccessFile(index.getPath(), "r");
+                file.seek(current.getPosition());
+                byte[] data = new byte[current.getLength()];
+                file.read(data);
+                file.close();
+                T ret = adapter.Deserialize(data);
+                file.close();
+                if(criterion.invoke(ret).equals(value))
+                {
+                    result.add(ret);
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
+        return result;
     }
 
     
@@ -27,14 +77,8 @@ public class Table<T extends Identified>
         index.close();
     }
     
-    public Table<T> addHashIndex(String field)
-    {
-        // hashIndex.append(new hashIndex(field));
-        return this;
-    }
-
+    Map<String, Method> methods;
     MainIndex index;
-    SortedList<HashIndex<?>> hashIndex;
     Adapter<T> adapter;
     TablePath path;
     Class<?> classe;

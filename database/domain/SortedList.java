@@ -26,6 +26,8 @@ public class SortedList<T extends Comparable<T>>
         return list.get(id);
     }
 
+    public List<T> getList() { return list; }
+
     public void remove(T item)
     {
         Tuple<Boolean, Integer> res = find(item);
