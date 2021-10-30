@@ -39,7 +39,6 @@ public class Table<T extends Identified>
           for (Method method : methos) 
           {
               this.methods.put(method.getName().replaceAll("get", ""), method);
-            // System.out.println(method.getReturnType().getName());
           }
     }
 
