@@ -31,6 +31,8 @@ class Main {
     // db.insert(new Livro("Eu Sou a Lenda", "Richard Matheson", 21.99F));
     
     // Livro eu_robo = db.get(1);
+
+    // System.out.println(eu_robo);
     
     // eu_robo.setTitulo("Nós, robôs");
     // db.update(eu_robo);

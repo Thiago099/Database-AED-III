@@ -57,6 +57,7 @@ public class Table<T extends Identified>
                 file.close();
                 T ret = adapter.Deserialize(data);
                 file.close();
+                ret.setId(current.getId());
                 if(criterion.invoke(ret).equals(value))
                 {
                     result.add(ret);
