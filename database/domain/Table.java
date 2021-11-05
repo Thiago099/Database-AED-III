@@ -54,7 +54,6 @@ public class Table<T extends Identified>
         {
             try
             {
-                RandomAccessFile file = new RandomAccessFile(index.getPath(), "r");
                 T ret = get(current.id);
                 if(criterion.invoke(ret).equals(value))
                 {
