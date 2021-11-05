@@ -21,11 +21,6 @@ class Main {
   public static void main(String[] args) 
   {
     Table<Livro> db = new Table<Livro>(Livro.class, new LivroAdapter());
-    Class<?> livros = Livro.class;
-
-
-    
-    
         
     // db.insert(new Livro("Eu, Robô", "Isaac Asimov", 14.90F));
     // db.insert(new Livro("Eu Sou a Lenda", "Richard Matheson", 21.99F));
@@ -33,12 +28,14 @@ class Main {
     // Livro eu_robo = db.get(1);
 
     // System.out.println(eu_robo);
+
+    // System.out.println(eu_robo);
     
     // eu_robo.setTitulo("Nós, robôs");
     // db.update(eu_robo);
 
     // db.insert(new Livro("Test", "test", 74.90F));
-    // db.close();
+    db.close();
     
     // System.out.println(db.get(1));
     // System.out.println(db.get(2));

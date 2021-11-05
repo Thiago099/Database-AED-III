@@ -17,6 +17,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Member;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 
 public class Table<T extends Identified> 
 {
@@ -51,13 +55,7 @@ public class Table<T extends Identified>
             try
             {
                 RandomAccessFile file = new RandomAccessFile(index.getPath(), "r");
-                file.seek(current.getPosition());
-                byte[] data = new byte[current.getLength()];
-                file.read(data);
-                file.close();
-                T ret = adapter.Deserialize(data);
-                file.close();
-                ret.setId(current.getId());
+                T ret = get(current.id);
                 if(criterion.invoke(ret).equals(value))
                 {
                     result.add(ret);
@@ -97,7 +95,14 @@ public class Table<T extends Identified>
             byte[] data = new byte[idx.getLength()];
             file.read(data);
             file.close();
-            T ret = adapter.Deserialize(data);
+            ByteArrayInputStream bais = new ByteArrayInputStream(data);
+            DataInputStream dis = new DataInputStream(bais);
+            List<Integer> data_compressed = new ArrayList<Integer>();
+            for (int i = 0; i < idx.getLength() / 4; i++)
+            {
+                data_compressed.add(dis.readInt());
+            }
+            T ret = adapter.Deserialize(Base64.getDecoder().decode(LZW.decompress(data_compressed)));
             ret.setId(id);
             file.close();
             return ret;
@@ -153,17 +158,24 @@ public class Table<T extends Identified>
         try
         {
             RandomAccessFile file = new RandomAccessFile(index.getPath(), "rw");
-            byte[] obj = adapter.Serialize(object);
-            Index current = index.getPosition(obj.length);
+            List<Integer> compressed = LZW.compress(Base64.getEncoder().encodeToString(adapter.Serialize(object)));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            DataOutputStream dos = new DataOutputStream(baos);
+            for(Integer i : compressed)
+            {
+                dos.writeInt(i);
+            }
+            byte[] vet = baos.toByteArray();
+            Index current = index.getPosition(vet.length);
             if(object.getId() != 0)
             {
                 current.setId(object.getId());
             }
             index.getIndex().append(current);
-            current.setLength(obj.length);
+            current.setLength(vet.length);
             index.updateLast();
             file.seek(current.getPosition());
-            file.write(obj);
+            file.write(vet);
             file.close();
         }
         catch(Exception ex)
