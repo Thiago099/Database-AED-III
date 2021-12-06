@@ -1,6 +1,7 @@
 package hash_table;
 
 import java.util.*;
+import java.io.*;
 
 public class hashmap {
     public static void main(String[] args)
