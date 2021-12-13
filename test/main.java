@@ -16,6 +16,7 @@ import java.util.regex.*;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
+import database.ext.LZW;
 class Main {
   
   public static void main(String[] args) 
@@ -44,6 +45,9 @@ class Main {
     // {
     //   System.out.println(livro);
     // }
+
+    // LZW.compress(LivroAdapter);
+    //LZW decompress(LivroAdapter);
 
     for(Livro livro : db.find("Titulo", "Eu, Robô"))
     {

@@ -2,9 +2,11 @@ package database.ext;
 
 import java.util.*;
 
+import hash_table.hashmap;
+
 public class LZW {
     /** Compress a string to a list of output symbols. */
-    public static List<Integer> compress(String uncompressed) {
+    public static List<Integer> compress(String uncompressed) { //Mudar para hashmap 
         //Build the dictionary.
         int dictSize = 256;
         Map<String,Integer> dictionary = new HashMap<String, Integer>();
@@ -60,4 +62,6 @@ public class LZW {
         }
         return result.toString();
     }
+
+    
 }

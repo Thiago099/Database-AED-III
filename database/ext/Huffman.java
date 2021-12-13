@@ -4,6 +4,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
+
+import test.domain.Livro;
  
 //No da Trie
 class Node
@@ -161,4 +163,8 @@ class Main
         String text = "Huffman coding is a data compression algorithm.";
         buildHuffmanTree(text);
     }
+
 }
+
+
+
